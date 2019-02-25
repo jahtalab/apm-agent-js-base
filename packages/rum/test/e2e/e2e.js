@@ -23,7 +23,7 @@
  *
  */
 
-const elasticApm = require('../..')
+const elasticApm = require('../../src/index')
 const apmBase = elasticApm.apmBase
 
 const ApmServerMock = require('../../../rum-core/test/utils/apm-server-mock')

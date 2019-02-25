@@ -23,31 +23,16 @@
  *
  */
 
-var path = require('path')
-var webpack = require('webpack')
+var createApmBase = require('../e2e')
 
-const { getConfig } = require('../../../../../dev-utils/test')
-const globalConfigs = getConfig()
+var apm = createApmBase({
+  debug: true,
+  serviceName: 'apm-agent-js-base-test-e2e-react',
+  serviceVersion: '0.0.1',
+  sendPageLoadTransaction: false
+})
 
-const configJson = JSON.stringify(globalConfigs, undefined, 2)
-const env = { globalConfigs: configJson }
-console.log(configJson)
-
+apm.setInitialPageLoadName('react-initial-page-load')
 module.exports = {
-  entry: path.resolve(__dirname, './app.jsx'),
-  output: { path: __dirname, filename: 'app.e2e-bundle.js' },
-  devtool: 'source-map',
-  mode: 'development',
-  module: {
-    rules: [
-      {
-        test: /.jsx?$/,
-        include: [__dirname, path.resolve(__dirname)],
-        use: {
-          loader: 'babel-loader'
-        }
-      }
-    ]
-  },
-  plugins: [new webpack.DefinePlugin(env)]
+  apm
 }
