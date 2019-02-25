@@ -153,6 +153,7 @@
     "react-router-dom": "^4.2.2",
     "regenerator-runtime": "^0.13.3",
     "rimraf": "^3.0.0",
+    "selenium-standalone": "^6.15.4",
     "serve-index": "^1.9.1",
     "stats-lite": "^2.2.0",
     "terser-webpack-plugin": "^2.3.0",
