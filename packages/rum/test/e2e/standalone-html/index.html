@@ -1,23 +1,55 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>test</title>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
-    <script type="application/javascript">
-      /**
-       * Used for testing errors on unsupported browsers
-       */
-      window.capturedTestErrors = []
-      window.onerror = function(err) {
-        window.capturedTestErrors.push(err)
-      }
-    </script>
-  </head>
 
-  <body>
-    <div id="app"></div>
-    <script src="/dist/bundles/elastic-apm-rum.umd.min.js"></script>
-    <script src="/test/e2e/standalone-html/base.e2e-bundle.js"></script>
-  </body>
+<head>
+  <title>test</title>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <script type="application/javascript">
+    /**
+     * Used for testing errors on unsupported browsers
+     */
+    window.capturedTestErrors = []
+    window.onerror = function (err) {
+      window.capturedTestErrors.push(err)
+    }
+  </script>
+  <script src="/dist/bundles/elastic-apm-rum.umd.js"></script>
+  <script>
+    window.elasticApm.init({
+      serviceName: 'standalone-html',
+      serverUrl: 'http://localhost:8001',
+      debug:true,
+      // distributedTracingOrigins: [mockBackendUrl],
+      pageLoadTransactionName: '/'
+    })
+  </script>
+  <script>
+    debugger
+    var span = elasticApm.startSpan('Head end', 'type')
+  </script>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <!-- <script src="/test/e2e/standalone-html/base.e2e-bundle.js"></script> -->
+
+  <script>
+    var tr = elasticApm.getCurrentTransaction()
+    var eventName = 'before-images'
+    tr.mark(eventName)
+    tr.startSpan(eventName)
+    console.log(eventName, performance.now(), tr._start, tr)
+  </script>
+  <img class="fit-picture" src="https://i.pinimg.com/originals/95/ee/86/95ee8696f8ed1abb3767928c4d0daf65.jpg" />
+  <script>
+    var tr = elasticApm.getCurrentTransaction()
+    var eventName = 'after-images'
+    tr.mark(eventName)
+    tr.startSpan(eventName)
+    console.log(eventName, performance.now(), tr._start, tr)
+  </script>
+</body>
+
 </html>
