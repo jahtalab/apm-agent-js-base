@@ -23,6 +23,10 @@
  *
  */
 
+import { __DEV__ } from '../env'
+if (__DEV__) {
+  methodInErrorLogging('with not so long string')
+}
 import { createStackTraces, filterInvalidFrames } from './stack-trace'
 import { getPageMetadata, generateRandomId, merge } from '../common/utils'
 import { truncateModel, ERROR_MODEL } from '../common/truncate'
@@ -38,6 +42,12 @@ class ErrorLogging {
    * errorEvent = { message, filename, lineno, colno, error }
    */
   createErrorDataModel(errorEvent) {
+    if (__DEV__) {
+      methodInErrorLoggingCreateErrorDataModel('with not so long string')
+    }
+    if (!__DEV__) {
+      methodInErrorLoggingIsCalled('with not so long string')
+    }
     const frames = createStackTraces(errorEvent)
     const filteredFrames = filterInvalidFrames(frames)
 
