@@ -29,6 +29,7 @@ const proxy = require('express-http-proxy')
 const { join } = require('path')
 const { runIntegrationTest } = require('./integration-test')
 const { DEFAULT_APM_SERVER_URL } = require('./test-config')
+const basicAuth = require('express-basic-auth')
 
 function startBackendAgentServer(port = 8003) {
   const express = require('express')
@@ -85,6 +86,23 @@ function startApmServerProxy(port = 8001) {
 function startTestServers(path = join(__dirname, '../'), port = 8000) {
   const app = express()
   const staticPath = path
+
+  app.use(
+    basicAuth({
+      users: { admin: 'test1' },
+      challenge: true,
+      realm: 'test-realm',
+      unauthorizedResponse: function getUnauthorizedResponse(req) {
+        return req.auth
+          ? 'Credentials ' +
+              req.auth.user +
+              ':' +
+              req.auth.password +
+              ' rejected'
+          : 'No credentials provided'
+      }
+    })
+  )
 
   app.get('/healthcheck', function(req, res) {
     res.send('OK')
