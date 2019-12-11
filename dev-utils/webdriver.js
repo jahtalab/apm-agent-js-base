@@ -172,7 +172,7 @@ function getWebdriveBaseConfig(
     framework: 'jasmine',
     reporters: ['dot', 'spec'],
     jasmineNodeOpts: {
-      defaultTimeoutInterval: 90000
+      defaultTimeoutInterval: 900000
     },
     async before() {
       /**
@@ -235,6 +235,11 @@ function waitForApmServerCalls(errorCount = 0, transactionCount = 0) {
             serverCalls.sendTransactions &&
             serverCalls.sendTransactions.length >= transactionCount
         }
+
+        console.log(
+          'Checking ApmServer calls:',
+          serverCalls.sendTransactions && serverCalls.sendTransactions.length
+        )
 
         if (validCalls) {
           console.log('calls', serverCalls)

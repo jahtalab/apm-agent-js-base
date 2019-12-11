@@ -25,4 +25,9 @@
 
 const { getWebdriveBaseConfig } = require('../../dev-utils/webdriver')
 
-exports.config = getWebdriveBaseConfig(__dirname)
+exports.config = getWebdriveBaseConfig(__dirname, undefined, [
+  {
+    browserName: 'chrome',
+    version: '76'
+  }
+])
